@@ -1,0 +1,20 @@
+---
+title: "dogcat"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+
+catdfraw <- read_csv("dogcatdf/cat_breed_characteristics.csv")
+dogdfraw <- read_csv("dogcatdf/dog_breed_characteristics.csv")
+```
+
+
+
+
+
+
+
+
