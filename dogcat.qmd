@@ -9,12 +9,46 @@ library(tidyverse)
 
 catdfraw <- read_csv("dogcatdf/cat_breed_characteristics.csv")
 dogdfraw <- read_csv("dogcatdf/dog_breed_characteristics.csv")
+dogdfmore <- read_csv("dogcatdf/dog2.csv") |>
+  mutate(BreedName = `Dog breed`) |>
+  select(!`Dog breed`)
+```
+
+```{r}
+catdfraw |>
+  select(BreedName, LapCat, Fur, MaleWtKg, Temperment, AvgKittenPrice) |>
+  drop_na() |>
+  mutate(vetcheckup = )
+```
+
+```{r}
+dogrevisedf <- dogdfraw |>
+  mutate(BreedName = if_else(BreedName == "German Shepherd Dog", "German Shepherd", BreedName)) |>
+  select(c(BreedName, Temperment, MaleWtKg)) |>
+  drop_na() |>
+  merge(dogdfmore) |>
+  select(!LifetimeCost) |>
+  drop_na() |>
+  filter(`shoulder height (cm)` != "no data") |>
+  select(!c(`shoulder height (in)`)) |>
+  mutate(PurchasePrice = str_sub(PurchasePrice, 2, 10),
+         FoodCostYr = str_sub(FoodCostYr, 2, 10)) |>
+  mutate(PurchasePrice = as.double(gsub(",", "", PurchasePrice)),
+         FoodCostYr = as.double(gsub(",", "", FoodCostYr))) |>
+  mutate(height = as.double(`shoulder height (cm)`)) |>
+  mutate(length = height* 1.8) |>
+  select(!`shoulder height (cm)`)
+
+```
+
+
+```{r}
+
 ```
 
 
 
-
-
-
-
+```{r}
+write_csv(dogrevisedf, "dogrevisedf.csv")
+```
 

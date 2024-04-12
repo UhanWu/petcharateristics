@@ -1,0 +1,88 @@
+Dog breed,LifetimeCost,Longevity,PurchasePrice,FoodCostYr,GroomingRequired,SuitabilityOffspring,size category,shoulder height (cm),shoulder height (in),intelligence category
+Border Collie,"$20,143",12.52,$623,$324,2,3,medium,51,20,Brightest
+Border Terrier,"$22,638",14,$833,$324,2,1,small,no data,no data,Above average
+Brittany,"$22,589",12.92,$618,$466,2,2,medium,48,19,Excellent
+Cairn Terrier,"$21,992",13.84,$435,$324,2,1,small,25,10,Above average
+Welsh Springer Spaniel,"$20,224",12.49,$750,$324,2,1,medium,46,18,Above average
+English Cocker Spaniel,"$18,993",11.66,$800,$324,2,1,medium,41,16,Excellent
+Cocker Spaniel,"$24,330",12.5,$465,$674,2,1,small,37,14.5,Excellent
+Papillon,"$21,001",13,$740,$324,2,2,small,24,9.5,Brightest
+Australian Cattle Dog,"$20,395",11.67,$530,$466,2,3,medium,47,18.5,Brightest
+Shetland Sheepdog,"$21,006",12.53,$465,$405,1,1,small,37,14.5,Brightest
+Siberian Husky,"$22,049",12.58,$650,$466,3,1,medium,55,21.75,Average
+Lhasa Apso,"$22,031",13.92,$350,$324,2,1,small,27,10.5,Fair
+Affenpinscher,"$18,333",11.42,$510,$324,2,2,small,26,10.25,Above average
+Dachshund,"$20,113",12.63,$423,$324,2,3,small,no data,no data,Average
+Miniature Schnauzer,"$20,087",11.81,$715,$405,2,2,small,33,13,Excellent
+Chihuahua,"$26,250",16.5,$588,$324,2,3,small,13,5,Fair
+Australian Terrier,"$17,892",11.05,$640,$324,2,2,small,27,10.5,Above average
+Whippet,"$20,976",12.87,$915,$324,2,2,medium,51,20,Average
+English Springer Spaniel,"$21,946",12.54,$615,$466,2,1,medium,50,19.5,Excellent
+West Highland White Terrier,"$20,490",12.8,$538,$324,2,1,small,27,10.5,Average
+Bedlington Terrier,"$22,107",13.51,"$1,058",$324,2,2,small,no data,no data,Average
+Poodle,"$21,237",11.95,$900,$466,2,2,medium,41,16,Brightest
+Bichon Frise,"$19,735",12.21,$693,$324,1,1,small,27,10.5,Average
+German Shorthaired Pointer,"$25,842",11.46,$545,$971,2,1,large,61,24,Excellent
+Pointer,"$24,445",12.42,$294,$710,2,1,large,65,25.5,Average
+Tibetan Spaniel,"$25,549",14.42,"$1,050",$466,2,1,small,25,10,Average
+Labrador Retriever,"$21,299",12.04,$810,$466,2,1,medium,58,23,Brightest
+Maltese,"$19,084",12.25,$650,$270,1,3,small,23,9,Fair
+Pomeranian,"$15,792",9.67,$670,$324,2,2,small,no data,no data,Excellent
+Shih Tzu,"$21,152",13.2,$583,$324,1,1,small,25,9.75,Lowest
+Australian Shepherd,"$21,458",12.28,$565,$466,2,2,medium,52,20.5,Average
+Yorkshire Terrier,"$20,701",12.6,"$1,057",$324,1,3,small,no data,no data,Above average
+Irish Setter,"$20,323",11.63,$525,$466,2,1,large,66,26,Above average
+Pharaoh Hound,"$21,047",11.83,$913,$466,2,2,medium,58,23,Above average
+Brussels Griffon,"$19,551",12,$833,$324,2,3,small,no data,no data,Fair
+Golden Retriever,"$21,447",12.04,$958,$466,2,1,medium,58,22.75,Brightest
+Samoyed,"$25,352",12.44,"$1,162",$710,2,1,medium,54,21.25,Above average
+Beagle,"$19,468",12.3,$288,$324,1,1,small,36,14,Lowest
+Chesapeake Bay Retriever,"$16,697",9.48,$522,$466,2,1,large,60,23.5,Above average
+Tibetan Terrier,"$20,336",12.31,"$1,140",$324,2,2,small,39,15.5,Fair
+Gordon Setter,"$19,605",11.1,$700,$466,2,1,large,64,25,Above average
+English Setter,"$20,312",11.57,$615,$466,2,1,large,62,24.5,Above average
+Pug,"$18,527",11,$469,$405,2,1,medium,41,16,Fair
+Briard,"$19,673",11.17,$650,$466,1,1,large,62,24.5,Above average
+Norfolk Terrier,"$24,308",13.07,"$2,083",$466,2,2,small,24,9.5,Fair
+Flat-Coated Retriever,"$16,000",9.02,$600,$466,1,1,medium,59,23.25,Excellent
+Boston Terrier,"$17,741",10.92,$690,$324,2,1,medium,no data,no data,Average
+Doberman Pinscher,"$18,397",10.33,$790,$466,2,2,large,66,26,Brightest
+English Toy Spaniel,"$17,521",10.1,$925,$405,2,2,small,25,10,Average
+Belgian Tervuren,"$19,132",10.6,"$1,070",$466,2,1,large,61,24,Excellent
+Cavalier King Charles Spaniel,"$18,639",11.29,"$1,017",$324,2,1,small,32,12.5,Average
+Dalmatian,"$19,886",11.27,$695,$466,2,1,medium,53,21,Above average
+Basset Hound,"$18,328",11.43,$490,$324,2,1,small,36,14,Lowest
+Basenji,"$22,096",13.58,$940,$324,2,2,medium,42,16.5,Lowest
+Italian Greyhound,"$16,463",10.02,$800,$324,2,3,small,36,14,Fair
+Staffordshire Bull Terrier,"$21,650",12.05,"$1,145",$466,2,1,medium,38,15,Average
+Bouvier des Flandres,"$18,959",10.34,"$1,335",$466,2,1,large,65,25.5,Above average
+Pembroke Welsh Corgi,"$23,978",12.25,$587,$674,2,1,small,28,11,Excellent
+Clumber Spaniel,"$18,084",10,"$1,033",$466,2,1,medium,47,18.5,Above average
+Dandie Dinmont Terrier,"$21,633",12.17,$925,$466,1,1,small,23,9,Fair
+Saluki,"$24,866",12,"$1,525",$710,1,1,medium,58,23,Average
+Giant Schnauzer,"$26,686",10,$810,"$1,349",1,2,large,65,25.5,Above average
+Greyhound,"$15,819",9.36,"$1,175",$324,2,1,large,no data,no data,Average
+Scottish Terrier,"$17,525",10.69,$829,$324,1,2,small,25,10,Fair
+Rottweiler,"$18,886",9.11,"$1,118",$710,2,2,large,62,24.5,Brightest
+Kerry Blue Terrier,"$17,240",9.4,"$1,200",$466,1,2,medium,47,18.5,Above average
+Afghan Hound,"$24,077",11.92,$890,$710,1,1,large,66,26,Lowest
+Newfoundland,"$19,351",9.32,"$1,178",$710,2,1,large,69,27,Above average
+German Shepherd,"$17,416",9.73,$820,$466,2,2,large,61,24,Brightest
+Pekingese,"$20,565",11.56,$885,$466,1,2,small,no data,no data,Lowest
+Old English Sheepdog,"$22,611",11.19,$832,$710,1,1,medium,56,22,Fair
+Akita,"$20,994",10.16,"$1,202",$710,2,3,large,66,26,Average
+Rhodesian Ridgeback,"$16,530",9.1,$995,$466,2,2,large,65,25.5,Average
+French Bulldog,"$17,266",9,"$1,900",$466,2,1,medium,no data,no data,Fair
+Borzoi,"$16,176",9.08,$675,$466,1,2,large,71,28,Lowest
+Bernese Mountain Dog,"$16,099",7.56,"$1,320",$710,2,1,large,64,25.25,Excellent
+Bull Terrier,"$18,490",10.21,"$1,085",$466,2,2,medium,55,21.5,Fair
+Boxer,"$15,746",8.81,$700,$466,2,1,medium,59,23.25,Average
+Alaskan Malamute,"$21,986",10.67,"$1,210",$710,1,2,large,61,24,Average
+Chow Chow,"$15,898",9.01,$515,$466,1,2,medium,47,18.5,Lowest
+Bloodhound,"$13,824",6.75,$608,$710,2,2,large,64,25,Lowest
+Irish Wolfhound,"$18,435",6.94,"$1,333","$1,217",2,1,large,81,32,Average
+Bullmastiff,"$13,936",7.57,$980,$466,2,1,large,65,25.5,Fair
+Mastiff,"$13,581",6.5,$900,$701,2,1,large,76,30,Lowest
+Great Dane,"$14,662",6.96,"$1,040",$710,2,1,large,76,30,Average
+Saint Bernard,"$20,022",7.78,$875,"$1,217",1,1,large,67,26.5,Fair
+Bulldog,"$13,479",6.29,"$2,680",$466,2,2,medium,no data,no data,Lowest

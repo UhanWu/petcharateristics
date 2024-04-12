@@ -1,0 +1,67 @@
+BreedName,Temperment,MaleWtKg,Longevity,PurchasePrice,FoodCostYr,GroomingRequired,SuitabilityOffspring,size category,intelligence category,height,length
+Affenpinscher,"Active, Adventurous, Curious, Fun-loving, Playful, Stubborn",4,11.42,510,324,2,2,small,Above average,26,46.800000000000004
+Afghan Hound,"Aloof, Clownish, Dignified, Happy, Independent",28,11.92,890,710,1,1,large,Lowest,66,118.8
+Akita,"Alert, Courageous, Dignified, Docile, Friendly, Intelligent, Responsive",44,10.16,1202,710,2,3,large,Average,66,118.8
+Alaskan Malamute,"Affectionate, Devoted, Dignified, Friendly, Loyal, Playful",40,10.67,1210,710,1,2,large,Average,61,109.8
+Australian Shepherd,"Active, Affectionate, Friendly, Good-natured, Intelligent, Protective, Loving",27,12.28,565,466,2,2,medium,Average,52,93.60000000000001
+Australian Terrier,"Alert, Compassionate, Courageous, Even Tempered, Loyal, Spirited, Intelligent",5,11.05,640,324,2,2,small,Above average,27,48.6
+Basenji,"Affectionate, Alert, Curious, Energetic, Playful, Intelligent",11,13.58,940,324,2,2,medium,Lowest,42,75.60000000000001
+Basset Hound,"Affectionate, Devoted, Friendly, Gentle, Sweet-tempered, Tenacious",26,11.43,490,324,2,1,small,Lowest,36,64.8
+Beagle,"Friendly, Gentle, Independent, Intelligent, Lively, Loving, Sweet",11,12.3,288,324,1,1,small,Lowest,36,64.8
+Bernese Mountain Dog,"Affectionate, Faithful, Intelligent, Loyal",44,7.56,1320,710,2,1,large,Excellent,64,115.2
+Bichon Frise,"Affectionate, Cheerful, Feisty, Gentle, Playful, Intelligent, Sensitive",4,12.21,693,324,1,1,small,Average,27,48.6
+Bloodhound,"Affectionate, Even-tempered, Gentle, Stubborn, Independent",46,6.75,608,710,2,2,large,Lowest,64,115.2
+Border Collie,"Intelligent, Energetic, Alert, Responsive, Tenacious, Loyal, Protective",17,12.52,623,324,2,3,medium,Brightest,51,91.8
+Borzoi,"Athletic, Gentle, Independent, Intelligent, Quiet, Respectful",41,9.08,675,466,1,2,large,Lowest,71,127.8
+Boxer,"Brave, Bright, Confident, Energetic, Fearless, Friendly, Intelligent, Loyal, Playful",30,8.81,700,466,2,1,medium,Average,59,106.2
+Briard,"Faithful, Fearless, Intelligent, Loyal, Obedient, Protective",35,11.17,650,466,1,1,large,Above average,62,111.60000000000001
+Bull Terrier,"Active, Keen, Protective, Sweet-tempered, Trainable",28,10.21,1085,466,2,2,medium,Fair,55,99
+Bullmastiff,"Alert, Calm, Courageous, Devoted, Docile, Powerful, Loyal, Protective, Reliable",55,7.57,980,466,2,1,large,Fair,65,117
+Cairn Terrier,"Active, Assertive, Courageous, Fearless, Hardy, Intelligent",7,13.84,435,324,2,1,small,Above average,25,45
+Cavalier King Charles Spaniel,"Affectionate, Cheerful, Courageous, Gentle, Intelligent, Social",7,11.29,1017,324,2,1,small,Average,32,57.6
+Chesapeake Bay Retriever,"Happy, Affectionate, Dominant, Intelligent, Protective, Quiet",33,9.48,522,466,2,1,large,Above average,60,108
+Chihuahua,"Alert, Courageous, Devoted, Lively, Intelligent, Quick",2,16.5,588,324,2,3,small,Fair,13,23.400000000000002
+Chow Chow,"Aloof, Independent, Loyal, Quiet, Intelligent, Protective, Detached",26,9.01,515,466,1,2,medium,Lowest,47,84.60000000000001
+Clumber Spaniel,"Gentle, Loyal, Affectionate, Dignified, Aloof",32,10,1033,466,2,1,medium,Above average,47,84.60000000000001
+Cocker Spaniel,"Even Tempered, Joyful, Merry, Outgoing, Intelligent, Sociable, Trusting",10,12.5,465,674,2,1,small,Excellent,37,66.60000000000001
+Dalmatian,"Active, Energetic, Friendly, Intelligent, Outgoing, Playful, Sensitive",25,11.27,695,466,2,1,medium,Above average,53,95.4
+Doberman Pinscher,"Alert, Energetic, Fearless, Intelligent, Loyal, Obedient",43,10.33,790,466,2,2,large,Brightest,66,118.8
+English Cocker Spaniel,"Affectionate, Faithful, Friendly, Intelligent, Playful, Quiet, Trainable",14,11.66,800,324,2,1,medium,Excellent,41,73.8
+English Setter,"Strong-willed, Mischevious, Gentle, Energetic, Intelligent",30,11.57,615,466,2,1,large,Above average,62,111.60000000000001
+English Springer Spaniel,"Affectionate, Alert, Cheerful, Energetic, Intelligent, Playful, Social",23,12.54,615,466,2,1,medium,Excellent,50,90
+English Toy Spaniel,"Affectionate, Gentle, Happy, Loving, Playful, Reserved",5,10.1,925,405,2,2,small,Average,25,45
+German Shepherd,"Alert, Confident, Courageous, Curious, Intelligent, Loyal, Obedient, Watchful",35,9.73,820,466,2,2,large,Brightest,61,109.8
+German Shorthaired Pointer,"Affectionate, Boisterous, Bold, Cooperative, Intelligent, Trainable",29,11.46,545,971,2,1,large,Excellent,61,109.8
+Giant Schnauzer,"Devoted, Good-natured, Intelligent, Lively, Playful, Trainable",31,10,810,1349,1,2,large,Above average,65,117
+Giant Schnauzer,"Dominant, Intelligent, Kind, Loyal, Powerful, Strong-willed",38,10,810,1349,1,2,large,Above average,65,117
+Golden Retriever,"Confident, Friendly, Intelligent, Kind, Reliable, Trustworthy",32,12.04,958,466,2,1,medium,Brightest,58,104.4
+Gordon Setter,"Alert, Confident, Eager, Fearless, Loyal, Intelligent",31,11.1,700,466,2,1,large,Above average,64,115.2
+Great Dane,"Friendly, Confident, Devoted, Intelligent, Gentle, Loving, Reserved",77,6.96,1040,710,2,1,large,Average,76,136.8
+Irish Setter,"Affectionate, Companionable, Energetic, Independent, Lively, Playful, Intelligent",32,11.63,525,466,2,1,large,Above average,66,118.8
+Irish Wolfhound,"Dignified, Generous, Loyal, Patient, Sweet-tempered, Thoughtful, Intelligent",55,6.94,1333,1217,2,1,large,Average,81,145.8
+Italian Greyhound,"Affectionate, Agile, Athletic, Companionable, Intelligent, Mischevious",4,10.02,800,324,2,3,small,Fair,36,64.8
+Kerry Blue Terrier,"Affectionate, Alert, Gentle, Loyal, Spirited, Strong-willed, Intelligent",17,9.4,1200,466,1,2,medium,Above average,47,84.60000000000001
+Labrador Retriever,"Affectionate, Alert, Cheerful, Energetic, Friendly, Gentle, Intelligent, Loving, Loyal, Outgoing, Playful, Responsive, Social",32,12.04,810,466,2,1,medium,Brightest,58,104.4
+Lhasa Apso,"Alert, Assertive, Devoted, Friendly, Intelligent, Lively, Obedient, Playful, Spirited, Steady",6,13.92,350,324,2,1,small,Fair,27,48.6
+Maltese,"Active, Docile, Easygoing, Gentle, Intelligent, Playful, Responsive, Sweet-tempered",4,12.25,650,270,1,3,small,Fair,23,41.4
+Mastiff,"Affectionate, Alert, Cheerful, Courageous, Intelligent, Loyal, Protective",90,6.5,900,701,2,1,large,Lowest,76,136.8
+Miniature Schnauzer,"Devoted, Good-natured, Intelligent, Lively, Playful, Trainable",8,11.81,715,405,2,2,small,Excellent,33,59.4
+Norfolk Terrier,"Companionable, Fearless, Happy, Lovable, Self-confident, Spirited, Intelligent",5,13.07,2083,466,2,2,small,Fair,24,43.2
+Old English Sheepdog,"Adaptable, Bubbly, Intelligent, Loving, Playful, Sociable, Protective",39,11.19,832,710,1,1,medium,Fair,56,100.8
+Papillon,"Alert, Energetic, Friendly, Happy, Hardy, Intelligent",5,13,740,324,2,2,small,Brightest,24,43.2
+Pharaoh Hound,"Active, Affectionate, Intelligent, Playful, Sociable, Trainable",23,11.83,913,466,2,2,medium,Above average,58,104.4
+Pointer,"Active, Affectionate, Amiable, Even-tempered, Kind, Loyal, Intelligent",25,12.42,294,710,2,1,large,Average,65,117
+Poodle,"Active, Alert, Faithful, Instinctual, Intelligent, Trainable",26,11.95,900,466,2,2,medium,Brightest,41,73.8
+Pug,"Affectionate, Cheerful, Courageous, Gentle, Intelligent, Friendly, Outgoing, Playful, Loyal",8,11,469,405,2,1,medium,Fair,41,73.8
+Rhodesian Ridgeback,"Dignified, Intelligent, Loyal, Mischevious, Sensitive, Strong-willed",39,9.1,995,466,2,2,large,Average,65,117
+Rottweiler,"Alert, Courageous, Fearless, Good-natured, Independent, Intelligent, Loyal, Protective",51,9.11,1118,710,2,2,large,Brightest,62,111.60000000000001
+Saint Bernard,"Friendly, Gentle, Independent, Intelligent, Outgoing, Quiet, Social",66,7.78,875,1217,1,1,large,Fair,67,120.60000000000001
+Saluki,"Aloof, Intelligent, Quiet, Reserverd, Loyal",21,12,1525,710,1,1,medium,Average,58,104.4
+Samoyed,"Alert, Lively, Friendly, Intelligent, Playful, Sociable, Stubborn",26,12.44,1162,710,2,1,medium,Above average,54,97.2
+Shih Tzu,"Active, Courageous, Friendly, Gentle, Happy, Intelligent, Lively, Outgoing, Playful",6,13.2,583,324,1,1,small,Lowest,25,45
+Siberian Husky,"Alert, Friendly, Gentle, Intelligent, Outgoing",24,12.58,650,466,3,1,medium,Average,55,99
+Staffordshire Bull Terrier,"Affectionate, Bold, Courageous, Fearless, Intelligent, Reliable",14,12.05,1145,466,2,1,medium,Average,38,68.4
+Tibetan Spaniel,"Intelligent, Assertive, Aloof, Happy, Independent, Willful",6,14.42,1050,466,2,1,small,Average,25,45
+Tibetan Terrier,"Affectionate, Amiable, Energetic, Gentle, Reserved, Sensitive, Intelligent",10,12.31,1140,324,2,2,small,Fair,39,70.2
+Welsh Springer Spaniel,"Affectionate, Loyal, Active, Friendly, Playful, Stubborn, Intelligent",18,12.49,750,324,2,1,medium,Above average,46,82.8
+Whippet,"Affectionate, Friendly, Gentle, Intelligent, Lively, Quiet",16,12.87,915,324,2,2,medium,Average,51,91.8
