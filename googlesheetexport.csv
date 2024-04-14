@@ -1,0 +1,11 @@
+BreedName,annualcost,MaleWtKg,Longevity,GroomingRequired,intelligence category,PurchasePrice,PopularityUS2017
+Labrador Retriever,1769.0199335548175,32,12.04,2,Brightest,810,1
+German Shepherd,1789.9280575539567,35,9.73,2,Brightest,820,2
+Golden Retriever,1781.3122923588041,32,12.04,2,Brightest,958,3
+Beagle,1582.7642276422764,11,12.3,1,Lowest,288,6
+Poodle,1777.1548117154812,26,11.95,2,Brightest,900,7
+Rottweiler,2073.106476399561,51,9.11,2,Brightest,1118,8
+German Shorthaired Pointer,2254.9738219895285,29,11.46,2,Excellent,545,10
+Boxer,1787.2871736662883,30,8.81,2,Average,700,11
+Siberian Husky,1752.7027027027027,24,12.58,3,Average,650,12
+Great Dane,2106.609195402299,77,6.96,2,Average,1040,14

@@ -6,6 +6,7 @@ editor: visual
 
 ```{r}
 library(tidyverse)
+library(stringr)
 
 catdfraw <- read_csv("dogcatdf/cat_breed_characteristics.csv")
 dogdfraw <- read_csv("dogcatdf/dog_breed_characteristics.csv")
@@ -17,38 +18,204 @@ dogdfmore <- read_csv("dogcatdf/dog2.csv") |>
 ```{r}
 catdfraw |>
   select(BreedName, LapCat, Fur, MaleWtKg, Temperment, AvgKittenPrice) |>
-  drop_na() |>
-  mutate(vetcheckup = )
+  drop_na()
 ```
 
 ```{r}
 dogrevisedf <- dogdfraw |>
   mutate(BreedName = if_else(BreedName == "German Shepherd Dog", "German Shepherd", BreedName)) |>
-  select(c(BreedName, Temperment, MaleWtKg)) |>
+  select(c(BreedName, Temperment, MaleWtKg), PopularityUS2017) |>
   drop_na() |>
   merge(dogdfmore) |>
-  select(!LifetimeCost) |>
   drop_na() |>
   filter(`shoulder height (cm)` != "no data") |>
   select(!c(`shoulder height (in)`)) |>
   mutate(PurchasePrice = str_sub(PurchasePrice, 2, 10),
-         FoodCostYr = str_sub(FoodCostYr, 2, 10)) |>
+         FoodCostYr = str_sub(FoodCostYr, 2, 10),
+         LifetimeCost = str_sub(LifetimeCost, 2, 10)) |>
   mutate(PurchasePrice = as.double(gsub(",", "", PurchasePrice)),
-         FoodCostYr = as.double(gsub(",", "", FoodCostYr))) |>
+         FoodCostYr = as.double(gsub(",", "", FoodCostYr)),
+         LifetimeCost = as.double(gsub(",", "", LifetimeCost))) |>
   mutate(height = as.double(`shoulder height (cm)`)) |>
   mutate(length = height* 1.8) |>
-  select(!`shoulder height (cm)`)
+  select(!`shoulder height (cm)`) |>
+  mutate(annualcost = LifetimeCost/Longevity) |>
+  arrange(PopularityUS2017) 
+
+
+googlesheetexport <- dogrevisedf |>
+  select(BreedName, annualcost, `MaleWtKg`, Longevity, GroomingRequired, `intelligence category`, PurchasePrice, PopularityUS2017) |>
+  head(10)
+
+write_csv(googlesheetexport, "googlesheetexport.csv")
 
 ```
 
 
 ```{r}
+dogrevisedf
+
+# Split the Temperament column into separate words
+temperament_words <- str_split(dogrevisedf$Temperment, ",\\s*")
+
+# Flatten the list of words
+temperament_words <- unlist(temperament_words)
+
+# Remove any leading or trailing whitespace
+temperament_words <- str_trim(temperament_words)
+
+# Count the unique adjectives
+unique_adjectives <- table(temperament_words)
+
+# Display the unique adjectives and their frequencies
+dffreqDOG <- as.data.frame(unique_adjectives) |>
+  arrange(desc(Freq))
 
 ```
+
 
 
 
 ```{r}
 write_csv(dogrevisedf, "dogrevisedf.csv")
 ```
+
+```{r}
+modeldog <- lm(dogrevisedf, formula = LifetimeCost~PurchasePrice + Longevity + FoodCostYr)
+
+summary(modeldog)
+```
+
+
+
+#Cat
+```{r}
+# First, you need to install and load the 'readr' package if you haven't already
+# install.packages("readr")
+library(readr)
+
+# Define the CSV data
+csv_data <- "BreedName,Coat,Size,Shedding,Vocality,Friendliness,Intelligence,Lifespan_lower,Lifespan_upper
+Russian Blue,Short,Medium,4,1,3,4,15,20
+Balinese,Long,Medium,3,5,4,5,18,22
+Siberian,Semi-long,Medium,4,2,4,4,11,15
+Singapura,Short,Small,2,2,4,4,NA,NA
+Khao Manee,Short,Medium,NA,NA,10,12
+Cornish Rex,Rex,Medium,2,1,4,4,12,16
+European Burmese,Short,Medium,2,NA,5,5,NA,NA
+Cymric,Long,Medium,4,2,4,4,8,14
+Abyssinian,Short,Medium,3,1,4,4,12,16
+Australian Mist,Short,Medium,NA,NA,NA,NA,NA,NA
+British Longhair,Long,Medium,NA,NA,15,17,NA,NA
+British Shorthair,Short,Medium,3,2,4,4,14,20
+Egyptian Mau,Short,Medium,3,4,3,4,13,16
+Tonkinese,Short,Medium,2,4,4,4,10,16
+Japanese Bobtail,Short_long,Medium,3,4,4,4,15,18
+American Wirehair,Rex,Medium,3,3,3,4,15,16
+Pixiebob,Short,Medium,4,3,4,5,NA,NA
+Himalayan,Long,Medium_to_large,5,1,3,2,9,15
+Birman,Semi-long,NA,3,1,4,3,NA,NA
+Somali,Long,Medium,4,1,4,4,NA,NA
+York Chocolate,Long,NA,NA,1,5,4,NA,NA
+Norwegian Forest,Long,Large,4,1,4,4,14,16
+Colorpoint Shorthair,Short,NA,2,NA,4,4,NA,NA
+American Bobtail,Short_long,Large,4,3,4,4,13,15
+Korat,Short,Medium,1,3,3,4,15,20
+Peterbald,Hairless_flocked_velour_brush_or_straight,Medium,NA,NA,12,15,NA,NA
+Ocicat,Short,Medium,2,4,4,4,15,18
+Chinese Li Hua,Short,NA,3,NA,4,4,NA,NA
+Manx,Short_long,Medium,3,2,3,4,8,14
+Ragdoll,Long,Large,4,2,4,4,12,17
+Javanese,Long,NA,3,5,4,5,NA,NA
+Thai,Short,Medium,NA,NA,NA,NA,NA,NA
+Bombay,Short,Medium,2,2,4,3,12,16
+Sokoke,Short,Medium,NA,NA,NA,NA,NA,NA
+Turkish Van,Semi-long,Medium,2,4,3,4,NA,NA
+Siamese,Short,Medium,2,5,3,5,15,20
+Persian,Long,Medium,5,1,3,2,12,17
+LaPerm,Rex,Medium,2,1,4,4,10,15
+Selkirk Rex,Rex_Short_long,Medium,4,3,4,3,NA,NA
+Ragamuffin,Long,Large,4,2,4,4,NA,NA
+Exotic Shorthair,Short,Medium,3,1,4,2,NA,NA
+Asian,Short,Medium,NA,NA,14,15,NA,NA
+Nebelung,Semi-long,NA,4,2,3,4,NA,NA
+Munchkin,Short_long,Medium,NA,2,4,5,12,14
+Maine Coon,Long,Giant,4,1,4,4,12,15
+American Curl,Short_long,Medium,4,1,4,4,15,20
+Bengal,Short,Medium,2,2,4,5,12,16
+Chartreux,Short,Medium,4,1,4,4,12,15
+Burmilla,Short_long,Medium,3,5,4,4,12,14
+Snowshoe,Short,Medium,3,4,4,4,NA,NA
+Don Sphynx,Hairless,Medium,NA,NA,NA,NA,NA,NA
+Devon Rex,Rex,Medium,1,2,4,4,NA,NA
+German Rex,Rex,Medium,NA,NA,NA,NA,NA,NA
+Turkish Angora,Semi-long,Medium,2,1,3,4,NA,NA
+Toyger,Short,Medium,NA,NA,NA,NA,NA,NA
+Kurilian Bobtail,Short_long,Medium,NA,NA,15,20,NA,NA
+Sphynx,Hairless,Medium,1,4,5,5,15,20
+Scottish Fold,Short_long,Medium,3,1,4,4,12,15
+Burmese,Short,Medium,2,4,4,4,NA,NA
+Savannah,Short,Large_weighing_12_to_25_pounds,3,NA,5,5,12,20
+Oriental,Semi-long,Medium,NA,NA,10,15,NA,NA
+Havana Brown,Short,Medium,3,1,3,5,12,15
+American Shorthair,Short,Medium,3,1,4,3,15,20"
+
+# Read the CSV data into a dataframe
+df <- read.csv(text = csv_data)
+
+
+catdfrawmerge <- catdfraw
+
+catsheets <- df |>
+  drop_na()  |>
+  mutate(longevity = (Lifespan_lower + Lifespan_upper)/2) |>
+  merge(catdfraw) |>
+  select(!c(MalaysiaPopularity, AltBreedName)) |>
+  arrange(PopularityUS2017) |>
+  select(BreedName, Shedding, Vocality, AvgKittenPrice, MaleWtKg,Size, Intelligence, longevity, PopularityUS2017) |>
+  head(10)
+
+write_csv(catsheets, "catsheets.csv")
+```
+
+
+
+
+
+
+```{r}
+# Define the vectors
+vector_a <- c(2, 2, 2) #pet
+vector_b <- c(-4, -4, -5) #user
+
+# Function to calculate weighted cosine similarity incorporating vector lengths
+weighted_cosine_similarity <- function(vec1, vec2) {
+  # Calculate weights based on the lengths of the vectors
+  length1 <- sqrt(sum(vec1^2))
+  length2 <- sqrt(sum(vec2^2))
+
+  # Calculate directional weights
+  weights_ab <- length1 / length2
+  weights_ba <- length2 / length1
+
+  # Calculate cosine similarity A to B and B to A
+  dot_product <- sum(vec1 * vec2) * weights_ab
+  
+  norm1 <- sqrt(sum(vec1^2))
+  norm2 <- sqrt(sum(vec2^2))
+  
+  similarity <- dot_product / (norm1 * norm2)
+
+}
+
+# Calculate and print the weighted cosine similarities
+result1 <- weighted_cosine_similarity(vector_a, vector_b)
+result2 <- weighted_cosine_similarity(vector_b, vector_a)
+print(result1)
+print(result2)
+
+```
+
+\
+
 

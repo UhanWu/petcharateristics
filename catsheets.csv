@@ -1,0 +1,11 @@
+BreedName,Shedding,Vocality,AvgKittenPrice,MaleWtKg,Size,Intelligence,longevity,PopularityUS2017
+Persian,5,1,1250,6,Medium,2,14.5,2
+Maine Coon,4,1,1600,7,Giant,4,13.5,3
+Ragdoll,4,2,1000,7,Large,4,14.5,4
+British Shorthair,3,2,1750,7,Medium,4,17,5
+American Shorthair,3,1,900,6,Medium,3,17.5,6
+Abyssinian,3,1,1050,4,Medium,4,14,7
+Siamese,2,5,500,6,Medium,5,17.5,9
+Scottish Fold,3,1,1250,4,Medium,4,13.5,10
+Cornish Rex,2,1,1000,3,Medium,4,14,11
+Tonkinese,2,4,800,5,Medium,4,13,18

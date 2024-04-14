@@ -1,0 +1,182 @@
+---
+title: "catprepared"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+
+```
+# HWB
+```{r}
+library(dplyr)
+
+
+
+uservector <- c(4, 3, 2) # Note: Assuming '3' and '2' are already appropriately scaled
+
+weighted_cosine_similarity <- function(vec1, vec2) {
+  length1 <- sqrt(sum(vec1^2))
+  length2 <- sqrt(sum(vec2^2))
+
+  # Calculate directional weights
+  weights_ab <- length1 / length2
+
+  # Calculate cosine similarity A to B
+  dot_product <- sum(vec1 * vec2) * weights_ab
+  
+  norm1 <- sqrt(sum(vec1^2))
+  norm2 <- sqrt(sum(vec2^2))
+  
+  similarity <- dot_product / (norm1 * norm2)
+  return(similarity)
+}
+
+
+catreadydf <- read_csv("petdf - catnew.csv") |>
+  mutate(indexExpense = case_when(AnnualExpense_Lower >= 100 & AnnualExpense_Lower < 400 ~ 1,
+                                  AnnualExpense_Lower >= 400 & AnnualExpense_Lower < 900 ~ 2,
+                                  AnnualExpense_Lower >= 900 & AnnualExpense_Lower < 1200 ~ 3,
+                                  AnnualExpense_Lower >= 1200 & AnnualExpense_Lower < 1500 ~ 4,
+                                  AnnualExpense_Lower >= 1500 ~ 5)) |>
+  mutate(FriendPets = FriendPets - 1) |>
+  select(BreedName, indexExpense, GroomingReq, Vocality, Shedding, FriendChild, ActivityLevel) |>
+  cross_join(uservectors, by = character()) |>
+  rowwise() |> # Ensuring row-wise operation
+  mutate(HWBindex = weighted_cosine_similarity(c(indexExpense, Shedding, Vocality), c(a, b, c))) %>% 
+  ungroup() %>%
+  arrange(desc(HWBindex)) # Ordering by descending similarity scores
+
+# Print the result
+print(chattydf)
+
+
+```
+```{r}
+
+### User Information
+
+set.seed(1003)
+
+userinfoInput <- tibble(ID = 1:6, 
+                   budgetinput = c(1600, 1300, 1100, 800, 500, 150), 
+                   groominginput = c(5, 4, 3, 2, 1, 1),
+                   ownrentinput = c("own", "own", "own", "rent", "rent", "rent"),
+                   babiesinput = c(0, 1, 2, 3, 4, 5),
+                   allergiesinput = c(0, 1, 2, 3, 4, 5),
+                   housholdnumberinput = c(6, 6, 6, 6, 6, 6),
+                   activehourinput = c(6, 5, 4, 3, 2, 1))
+
+
+
+InputIndexify <- userinfoInput |>
+  mutate(indexExpenseInput = case_when(budgetinput >= 100 & budgetinput < 400 ~ 1,
+                                  budgetinput >= 400 & budgetinput < 900 ~ 2,
+                                  budgetinput >= 900 & budgetinput < 1200 ~ 3,
+                                  budgetinput >= 1200 & budgetinput < 1500 ~ 4,
+                                  budgetinput >= 1500 ~ 5)) |>
+  mutate(indexMaintenanceInput = groominginput) |>
+  mutate(indexNoiseInput = case_when(ownrentinput == "own" & babiesinput == 0 ~ 5,
+                                         ownrentinput == "own" & babiesinput == 1 ~ 4,
+                                         ownrentinput == "own" & babiesinput >= 2 ~ 3,
+                                         ownrentinput == "rent" & babiesinput == 0 ~ 3,
+                                         ownrentinput == "rent" & babiesinput == 1 ~ 2,
+                                         ownrentinput == "rent" & babiesinput >= 2 ~ 1)) |>
+  mutate(indexAllergiesInput1 = allergiesinput/housholdnumberinput,
+         indexAllergiesFINAL = case_when(indexAllergiesInput1 >= 0 & indexAllergiesInput1 < 0.2 ~ 5,
+                                          indexAllergiesInput1 >= 0.2 & indexAllergiesInput1 < 0.4 ~ 4,
+                                          indexAllergiesInput1 >= 0.4 & indexAllergiesInput1 < 0.6 ~ 3,
+                                          indexAllergiesInput1 >= 0.6 & indexAllergiesInput1 < 0.8 ~ 2,
+                                          indexAllergiesInput1 >= 0.8 & indexAllergiesInput1 <= 1 ~ 1)) |>
+  mutate(indexSafetyInput = case_when(babiesinput == 0 ~ 3, 
+                                      babiesinput == 1 ~ 2,
+                                      babiesinput >= 2 ~ 1)) |>
+  mutate(indexActiveInput = case_when(activehourinput < 1 ~ 1,
+                                      activehourinput >= 1 & activehourinput < 2 ~ 2,
+                                      activehourinput >= 2 & activehourinput < 4 ~ 3,
+                                      activehourinput >= 4 & activehourinput < 6 ~ 4,
+                                      activehourinput >= 6 ~ 5)) |>
+  select(ID, indexExpenseInput, indexMaintenanceInput, 
+         indexNoiseInput, indexAllergiesFINAL, indexSafetyInput, indexActiveInput)
+           
+  
+```
+  
+```{r}
+
+### Pet Informatioon
+
+weighted_cosine_similarity <- function(vec1, vec2) {
+  length1 <- sqrt(sum(vec1^2))
+  length2 <- sqrt(sum(vec2^2))
+
+  # Calculate directional weights
+  weights_ab <- length1 / length2
+
+  # Calculate cosine similarity A to B
+  dot_product <- sum(vec1 * vec2) * weights_ab
+  
+  norm1 <- sqrt(sum(vec1^2))
+  norm2 <- sqrt(sum(vec2^2))
+  
+  similarity <- dot_product / (norm1 * norm2)
+  return(similarity)
+}
+
+catreadydf <- read_csv("petdf - catnew.csv") |>
+  mutate(indexExpense = case_when(AnnualExpense_Lower >= 100 & AnnualExpense_Lower < 400 ~ 1,
+                                  AnnualExpense_Lower >= 400 & AnnualExpense_Lower < 900 ~ 2,
+                                  AnnualExpense_Lower >= 900 & AnnualExpense_Lower < 1200 ~ 3,
+                                  AnnualExpense_Lower >= 1200 & AnnualExpense_Lower < 1500 ~ 4,
+                                  AnnualExpense_Lower >= 1500 ~ 5)) |>
+  mutate(FriendPets = FriendPets - 1) |>
+  mutate(GroomingReq = case_when(GroomingReq == 5 ~ 1,
+                                 GroomingReq == 4 ~ 2,
+                                 GroomingReq == 3 ~ 3,
+                                 GroomingReq == 2 ~ 4,
+                                 GroomingReq == 1 ~ 5)) |>
+  mutate(Shedding = case_when(Shedding == 5 ~ 1,
+                                 Shedding == 4 ~ 2,
+                                 Shedding == 3 ~ 3,
+                                 Shedding == 2 ~ 4,
+                                 Shedding == 1 ~ 5)) |>
+  mutate(Vocality = case_when(Vocality == 5 ~ 1,
+                                 Vocality == 4 ~ 2,
+                                 Vocality == 3 ~ 3,
+                                 Vocality == 2 ~ 4,
+                                 Vocality == 1 ~ 5)) |>
+  select(BreedName, indexExpense, GroomingReq, Vocality, Shedding, FriendChild, ActivityLevel) |>
+  cross_join(InputIndexify) |>
+  rowwise() |>
+  mutate(HWBindex = weighted_cosine_similarity(c(indexExpenseInput, indexMaintenanceInput, indexNoiseInput, 
+                                                 indexAllergiesFINAL, indexSafetyInput, indexActiveInput),
+                                                c(indexExpense, GroomingReq, Vocality, Shedding, FriendChild, ActivityLevel))) 
+
+
+HWBindexDF <- catreadydf |>
+  select(ID, BreedName, HWBindex) |>
+  ungroup() 
+
+HWBindexDF |>
+  mutate(ID = as.character(ID)) |>
+  ggplot(aes(x = BreedName, y = HWBindex, fill =  ID)) + 
+  geom_col(position = 'dodge')
+
+```
+
+```{r}
+HWBindexDF |>
+  arrange(desc(HWBindex))
+```
+
+
+# PWB
+
+```{r}
+
+```
+

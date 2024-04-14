@@ -1,0 +1,61 @@
+ID,BreedName,PWBindex
+1,Persian,1.3809524
+2,Persian,1.1428571
+3,Persian,0.8095238
+4,Persian,0.5714286
+5,Persian,0.2857143
+6,Persian,0.2380952
+1,Maine Coon,1.7058824
+2,Maine Coon,1.4117647
+3,Maine Coon,1
+4,Maine Coon,0.7058824
+5,Maine Coon,0.4117647
+6,Maine Coon,0.2941176
+1,Ragdoll,2.1111111
+2,Ragdoll,1.7777778
+3,Ragdoll,1.2222222
+4,Ragdoll,0.8888889
+5,Ragdoll,0.4444444
+6,Ragdoll,0.3333333
+1,British Shorthair,2.1111111
+2,British Shorthair,1.7777778
+3,British Shorthair,1.2222222
+4,British Shorthair,0.8888889
+5,British Shorthair,0.5555556
+6,British Shorthair,0.3333333
+1,American Shorthair,1.2222222
+2,American Shorthair,1
+3,American Shorthair,0.7222222
+4,American Shorthair,0.5
+5,American Shorthair,0.3333333
+6,American Shorthair,0.2222222
+1,Abyssinian,1.0888889
+2,Abyssinian,0.8888889
+3,Abyssinian,0.6444444
+4,Abyssinian,0.4444444
+5,Abyssinian,0.3111111
+6,Abyssinian,0.2
+1,Siamese,1
+2,Siamese,0.8148148
+3,Siamese,0.5925926
+4,Siamese,0.4074074
+5,Siamese,0.2777778
+6,Siamese,0.1851852
+1,Scottish Fold,1.7058824
+2,Scottish Fold,1.4117647
+3,Scottish Fold,1
+4,Scottish Fold,0.7058824
+5,Scottish Fold,0.4117647
+6,Scottish Fold,0.2941176
+1,Cornish Rex,1
+2,Cornish Rex,0.8148148
+3,Cornish Rex,0.5925926
+4,Cornish Rex,0.4074074
+5,Cornish Rex,0.2777778
+6,Cornish Rex,0.1851852
+1,Tonkinese,1.3448276
+2,Tonkinese,1.1034483
+3,Tonkinese,0.7931034
+4,Tonkinese,0.5517241
+5,Tonkinese,0.3448276
+6,Tonkinese,0.2413793

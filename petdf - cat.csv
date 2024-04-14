@@ -1,0 +1,11 @@
+BreedName,AvgKittenPrice,MaleWtKg,Intelligence,longevity,AnnualExpense_Lower,AnnualExpense_Upper,AnnualExpense_Avg,Shedding,Vocality
+Persian,1250,6,2,14.5,"1,272","2,604","1,938",5,1
+Maine Coon,1600,7,4,13.5,"1,150","5,220","3,185",4,1
+Ragdoll,1000,7,4,14.5,"2,160","9,060","5,610",4,2
+British Shorthair,1750,7,4,17,"1,270","2,605","1,938",3,2
+American Shorthair,900,6,3,17.5,"1,270","7,200","4,235",3,1
+Abyssinian,1050,4,4,14,"1,075","9,862","5,469",3,1
+Siamese,500,6,5,17.5,"1,270","2,605","1,938",2,5
+Scottish Fold,1250,4,4,13.5,"1,270","2,605","1,938",3,1
+Cornish Rex,1000,3,4,14,300,"2,300","1,300",2,1
+Tonkinese,800,5,4,13,700,"1,200",950,2,4
