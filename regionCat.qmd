@@ -1,0 +1,274 @@
+---
+title: "regionalestimation"
+format: html
+editor: visual
+---
+
+# Setup Packages
+`
+```{r}
+library(tidyverse)
+```
+
+# Vector Projection
+
+```{r}
+weighted_cosine_similarity <- function(vec1, vec2) {
+  length1 <- sqrt(sum(vec1^2))
+  length2 <- sqrt(sum(vec2^2))
+
+  # Calculate directional weights
+  weights_ab <- length1 / length2
+
+  # Calculate cosine similarity A to B
+  dot_product <- sum(vec1 * vec2) * weights_ab
+  
+  norm1 <- sqrt(sum(vec1^2))
+  norm2 <- sqrt(sum(vec2^2))
+  
+  similarity <- dot_product / (norm1 * norm2)
+  return(similarity)
+}
+```
+
+
+# User Information (Profiles)
+
+
+```{r}
+set.seed(1003)
+
+n = 1000000
+
+california_homeownership_rate <- 0.546
+west_virginia_homeownership_rate <- 0.79
+new_york_homeownership_rate <- 0.536
+
+avg_household_size_ca <- 2.94
+avg_household_size_wv <- 2.40
+avg_household_size_ny <- 2.55
+
+
+userinfoInput <- expand.grid(ID = 1:n, state = c("California", "West Virginia", "New York"))
+
+userinfoInput <- userinfoInput %>%
+  mutate(budgetpercentage = sample(seq(0.05, 0.06, by = 0.001), size = n * 3, replace = TRUE))
+
+userinfoInput <- userinfoInput %>%
+  group_by(state) |>
+  mutate(salaryinput = case_when(
+    state == "California" ~ sample(seq(62525 * 0.10, 62525 * 1.1, by = 0.1), size = n(), replace = TRUE),
+    state == "West Virginia" ~ sample(seq(40539 * 0.10, 40539 * 1.1, by = 0.1), size = n(), replace = TRUE),
+    state == "New York" ~ sample(seq(56897 * 0.10, 56897 * 1.1, by = 0.1), size = n(), replace = TRUE)
+  )) |>
+  ungroup() 
+
+userinfoInput <- userinfoInput %>%
+  mutate(
+    budgetinput = salaryinput * budgetpercentage,
+    groominginput = sample(c(1, 2, 3, 4, 5), size = n(), replace = TRUE),
+    ownrentinput = case_when(
+      state == "California" ~ sample(c("own", "rent"), size = n(), replace = TRUE, 
+                                     prob = c(california_homeownership_rate, 1 - california_homeownership_rate)),
+      state == "West Virginia" ~ sample(c("own", "rent"), size = n(), replace = TRUE, 
+                                        prob = c(west_virginia_homeownership_rate, 1 - west_virginia_homeownership_rate)),
+      state == "New York" ~ sample(c("own", "rent"), size = n(), replace = TRUE,
+                                   prob = c(new_york_homeownership_rate, 1 - new_york_homeownership_rate))
+    ),
+    babiesinput = case_when(
+      state == "California" ~ sample(0:3, size = n(), replace = TRUE, prob = c(0.5, 0.25, 0.15, 0.1)),
+      state == "West Virginia" ~ sample(0:3, size = n(), replace = TRUE, prob = c(0.6, 0.2, 0.15, 0.05)),
+      state == "New York" ~ sample(0:3, size = n(), replace = TRUE, prob = c(0.55, 0.25, 0.1, 0.1))
+    ),
+
+    housholdnumberinput = case_when(
+      state == "California" ~ pmax(1 + babiesinput, rpois(n(), lambda = 2.94)),
+      state == "West Virginia" ~ pmax(1 + babiesinput, rpois(n(), lambda = 2.40)),
+      state == "New York" ~ pmax(1 + babiesinput, rpois(n(), lambda = 2.55))
+    ),
+   
+    allergiesinput = case_when(
+      state == "California" ~ rbinom(n(), size = ceiling(avg_household_size_ca), prob = 0.20),
+      state == "West Virginia" ~ rbinom(n(), size = ceiling(avg_household_size_wv), prob = 0.20),
+      state == "New York" ~ rbinom(n(), size = ceiling(avg_household_size_ny), prob = 0.20)
+    )
+  ) %>%
+ mutate(allergiesinput = pmin(allergiesinput, housholdnumberinput - 1)) |>
+  mutate(activehourinput = sample(0:35, size = n(), replace = TRUE)) |>
+  mutate(experienceinput = rpois(n = n(), lambda = 1)) |>
+  mutate(vacayinput = sample(c(0, 1, 2), size = n(), replace = TRUE))  |>
+  mutate(intentioninput = sample(c(0, 1, 2), size = n(), replace = TRUE))
+  
+```
+
+
+# HWB
+
+```{r}
+
+InputIndexify <- userinfoInput |>
+  mutate(indexExpenseInput = case_when(budgetinput >= 100 & budgetinput < 200 ~ 1,
+                                  budgetinput >= 200 & budgetinput < 300 ~ 2,
+                                  budgetinput >= 300 & budgetinput < 400 ~ 3,
+                                  budgetinput >= 400 & budgetinput < 500 ~ 4,
+                                  budgetinput >= 500 & budgetinput < 600 ~ 5,
+                                  budgetinput >= 600 & budgetinput < 700 ~ 6,
+                                  budgetinput >= 700 & budgetinput < 800 ~ 7,
+                                  budgetinput >= 800 & budgetinput < 900 ~ 8,
+                                  budgetinput >= 900 & budgetinput < 1000 ~9,
+                                  budgetinput >= 1000 & budgetinput < 1100 ~ 10,
+                                  budgetinput >= 1100 & budgetinput < 1200 ~ 11,
+                                  budgetinput >= 1200 & budgetinput < 1300 ~ 12,
+                                  budgetinput >= 1300 & budgetinput < 1400 ~ 13,
+                                  budgetinput >= 1400 & budgetinput < 1500 ~ 14,
+                                  budgetinput >= 1500 ~ 15))|>
+  mutate(indexMaintenanceInput = groominginput) |>
+  mutate(indexNoiseInput = case_when(ownrentinput == "own" & babiesinput == 0 ~ 5,
+                                         ownrentinput == "own" & babiesinput == 1 ~ 4,
+                                         ownrentinput == "own" & babiesinput >= 2 ~ 3,
+                                         ownrentinput == "rent" & babiesinput == 0 ~ 3,
+                                         ownrentinput == "rent" & babiesinput == 1 ~ 2,
+                                         ownrentinput == "rent" & babiesinput >= 2 ~ 1)) |>
+  mutate(indexAllergiesInput1 = allergiesinput/housholdnumberinput,
+         indexAllergiesFINAL = case_when(indexAllergiesInput1 >= 0 & indexAllergiesInput1 < 0.2 ~ 5,
+                                          indexAllergiesInput1 >= 0.2 & indexAllergiesInput1 < 0.4 ~ 4,
+                                          indexAllergiesInput1 >= 0.4 & indexAllergiesInput1 < 0.6 ~ 3,
+                                          indexAllergiesInput1 >= 0.6 & indexAllergiesInput1 < 0.8 ~ 2,
+                                          indexAllergiesInput1 >= 0.8 & indexAllergiesInput1 <= 1 ~ 1)) |>
+  mutate(indexSafetyInput = case_when(babiesinput == 0 ~ 3, 
+                                      babiesinput == 1 ~ 2,
+                                      babiesinput >= 2 ~ 1)) |>
+  mutate(indexActiveInput = case_when(activehourinput < 1 ~ 1,
+                                      activehourinput >= 1 & activehourinput < 2 ~ 2,
+                                      activehourinput >= 2 & activehourinput < 4 ~ 3,
+                                      activehourinput >= 4 & activehourinput < 6 ~ 4,
+                                      activehourinput >= 6 ~ 5)) |>
+  select(ID, state, indexExpenseInput, indexMaintenanceInput, 
+         indexNoiseInput, indexAllergiesFINAL, indexSafetyInput, indexActiveInput)
+           
+  
+```
+  
+```{r}
+
+catreadydf <- read_csv("petdf - catnew.csv") |>
+  mutate(indexExpense = case_when(AnnualExpense_Lower >= 100 & AnnualExpense_Lower < 200 ~ 1,
+                                  AnnualExpense_Lower >= 200 & AnnualExpense_Lower < 300 ~ 2,
+                                  AnnualExpense_Lower >= 300 & AnnualExpense_Lower < 400 ~ 3,
+                                  AnnualExpense_Lower >= 400 & AnnualExpense_Lower < 500 ~ 4,
+                                  AnnualExpense_Lower >= 500 & AnnualExpense_Lower < 600 ~ 5,
+                                  AnnualExpense_Lower >= 600 & AnnualExpense_Lower < 700 ~ 6,
+                                  AnnualExpense_Lower >= 700 & AnnualExpense_Lower < 800 ~ 7,
+                                  AnnualExpense_Lower >= 800 & AnnualExpense_Lower < 900 ~ 8,
+                                  AnnualExpense_Lower >= 900 & AnnualExpense_Lower < 1000 ~9,
+                                  AnnualExpense_Lower >= 1000 & AnnualExpense_Lower < 1100 ~ 10,
+                                  AnnualExpense_Lower >= 1100 & AnnualExpense_Lower < 1200 ~ 11,
+                                  AnnualExpense_Lower >= 1200 & AnnualExpense_Lower < 1300 ~ 12,
+                                  AnnualExpense_Lower >= 1300 & AnnualExpense_Lower < 1400 ~ 13,
+                                  AnnualExpense_Lower >= 1400 & AnnualExpense_Lower < 1500 ~ 14,
+                                  AnnualExpense_Lower >= 1500 ~ 15)) |>
+  mutate(FriendChild = FriendChild - 1) |>
+  mutate(GroomingReq = case_when(GroomingReq == 5 ~ 1,
+                                 GroomingReq == 4 ~ 2,
+                                 GroomingReq == 3 ~ 3,
+                                 GroomingReq == 2 ~ 4,
+                                 GroomingReq == 1 ~ 5)) |>
+  mutate(Shedding = case_when(Shedding == 5 ~ 1,
+                                 Shedding == 4 ~ 2,
+                                 Shedding == 3 ~ 3,
+                                 Shedding == 2 ~ 4,
+                                 Shedding == 1 ~ 5)) |>
+  mutate(Vocality = case_when(Vocality == 5 ~ 1,
+                                 Vocality == 4 ~ 2,
+                                 Vocality == 3 ~ 3,
+                                 Vocality == 2 ~ 4,
+                                 Vocality == 1 ~ 5)) |>
+  select(BreedName, indexExpense, GroomingReq, Vocality, Shedding, FriendChild, ActivityLevel) |>
+  cross_join(InputIndexify) |>
+  rowwise() |>
+  mutate(HWBindex = weighted_cosine_similarity(c(indexExpenseInput, indexMaintenanceInput, indexNoiseInput, 
+                                                 indexAllergiesFINAL, indexSafetyInput, indexActiveInput),
+                                                c(indexExpense, GroomingReq, Vocality, Shedding, 
+                                                  FriendChild, ActivityLevel))) 
+
+
+HWBindexDF <- catreadydf |>
+  select(ID,state,BreedName, HWBindex) |>
+  ungroup() 
+
+
+```
+
+```{r}
+catreadydf2 <- read_csv("petdf - catnew.csv") |>
+  mutate(Docility = case_when(Docility == 5 ~ 1,
+                                 Docility == 4 ~ 2,
+                                 Docility == 3 ~ 3,
+                                 Docility == 2 ~ 4,
+                                 Docility == 1 ~ 5)) |>
+  mutate(CatVacay = 2) |>
+  mutate(CatIntent = 2) |>
+  select(BreedName, ActivityLevel, CatVacay, Docility, CatIntent) |>
+  cross_join(InputIndexify2) |>
+  rowwise() |>
+  mutate(PWBindex = weighted_cosine_similarity(c(indexActiveInput, indexVacayInput, indexExperienceInput, intentionInput),
+                                                c(ActivityLevel, CatVacay, Docility, CatIntent))) 
+
+
+PWBindexDF <- catreadydf2 |>
+  select(ID, state, BreedName, PWBindex) |>
+  ungroup() 
+```
+
+# PWB
+
+```{r}
+InputIndexify2 <- userinfoInput |>
+  mutate(indexActiveInput = case_when(activehourinput < 1 ~ 1,
+                                      activehourinput >= 1 & activehourinput < 2 ~ 2,
+                                      activehourinput >= 2 & activehourinput < 4 ~ 3,
+                                      activehourinput >= 4 & activehourinput < 6 ~ 4,
+                                      activehourinput >= 6 ~ 5)) |>
+  mutate(indexVacayInput = vacayinput) |>
+  mutate(indexExperienceInput = case_when(experienceinput == 0 ~ 1,
+                                      experienceinput >= 0 & experienceinput < 1 ~ 2,
+                                      experienceinput >= 1 & experienceinput < 3 ~ 3,
+                                      experienceinput >= 3 & experienceinput < 5 ~ 4,
+                                      experienceinput >= 5 ~ 5)) |>
+  mutate(intentionInput = intentioninput) |>
+  select(ID, state, indexActiveInput, indexVacayInput, indexExperienceInput, intentionInput)
+```
+
+```{r}
+catreadydf2 <- read_csv("petdf - catnew.csv") |>
+  mutate(Docility = case_when(Docility == 5 ~ 1,
+                                 Docility == 4 ~ 2,
+                                 Docility == 3 ~ 3,
+                                 Docility == 2 ~ 4,
+                                 Docility == 1 ~ 5)) |>
+  mutate(CatVacay = 2) |>
+  mutate(CatIntent = 2) |>
+  select(BreedName, ActivityLevel, CatVacay, Docility, CatIntent) |>
+  cross_join(InputIndexify2) |>
+  rowwise() |>
+  mutate(PWBindex = weighted_cosine_similarity(c(indexActiveInput, indexVacayInput, indexExperienceInput, intentionInput),
+                                                c(ActivityLevel, CatVacay, Docility, CatIntent))) 
+
+
+PWBindexDF <- catreadydf2 |>
+  select(ID, state, BreedName, PWBindex) |>
+  ungroup() 
+```
+
+
+
+# 2D Visualization
+```{r}
+PWBindexDF |>
+  merge(HWBindexDF) |>
+  mutate(passNo = if_else(PWBindex >= 0.70 & HWBindex >= 0.70, 1, 0 )) |>
+  summarise(totalcount = sum(passNo), .by = c(state, ID)) |>
+  filter(totalcount >= 5) |>
+  select(state, ID) |>
+  summarise(totalownstate = n(), .by = state)
+```
