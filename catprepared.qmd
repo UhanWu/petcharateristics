@@ -65,14 +65,21 @@ set.seed(1003)
 ```{r}
 
 InputIndexify <- userinfoInput |>
-  mutate(indexExpenseInput = case_when(budgetinput >= 100 & budgetinput < 300 ~ 1,
-                                  budgetinput >= 300 & budgetinput < 500 ~ 2,
-                                  budgetinput >= 500 & budgetinput < 700 ~ 3,
-                                  budgetinput >= 700 & budgetinput < 900 ~ 4,
-                                  budgetinput >= 900 & budgetinput < 1100 ~ 5,
-                                  budgetinput >= 1100 & budgetinput < 1300 ~ 6,
-                                  budgetinput >= 1300 & budgetinput < 1500 ~ 7,
-                                  budgetinput >= 1500 ~ 8)) |>
+  mutate(indexExpenseInput = case_when(budgetinput >= 100 & budgetinput < 200 ~ 1,
+                                  budgetinput >= 200 & budgetinput < 300 ~ 2,
+                                  budgetinput >= 300 & budgetinput < 400 ~ 3,
+                                  budgetinput >= 400 & budgetinput < 500 ~ 4,
+                                  budgetinput >= 500 & budgetinput < 600 ~ 5,
+                                  budgetinput >= 600 & budgetinput < 700 ~ 6,
+                                  budgetinput >= 700 & budgetinput < 800 ~ 7,
+                                  budgetinput >= 800 & budgetinput < 900 ~ 8,
+                                  budgetinput >= 900 & budgetinput < 1000 ~9,
+                                  budgetinput >= 1000 & budgetinput < 1100 ~ 10,
+                                  budgetinput >= 1100 & budgetinput < 1200 ~ 11,
+                                  budgetinput >= 1200 & budgetinput < 1300 ~ 12,
+                                  budgetinput >= 1300 & budgetinput < 1400 ~ 13,
+                                  budgetinput >= 1400 & budgetinput < 1500 ~ 14,
+                                  budgetinput >= 1500 ~ 15))|>
   mutate(indexMaintenanceInput = groominginput) |>
   mutate(indexNoiseInput = case_when(ownrentinput == "own" & babiesinput == 0 ~ 5,
                                          ownrentinput == "own" & babiesinput == 1 ~ 4,
@@ -103,14 +110,21 @@ InputIndexify <- userinfoInput |>
 ```{r}
 
 catreadydf <- read_csv("petdf - catnew.csv") |>
-  mutate(indexExpense = case_when(AnnualExpense_Lower >= 100 & AnnualExpense_Lower < 300 ~ 1,
-                                  AnnualExpense_Lower >= 300 & AnnualExpense_Lower < 500 ~ 2,
-                                  AnnualExpense_Lower >= 500 & AnnualExpense_Lower < 700 ~ 3,
-                                  AnnualExpense_Lower >= 700 & AnnualExpense_Lower < 900 ~ 4,
-                                  AnnualExpense_Lower >= 900 & AnnualExpense_Lower < 1100 ~ 5,
-                                  AnnualExpense_Lower >= 1100 & AnnualExpense_Lower < 1300 ~ 6,
-                                  AnnualExpense_Lower >= 1300 & AnnualExpense_Lower < 1500 ~ 7,
-                                  AnnualExpense_Lower >= 1500 ~ 8)) |>
+  mutate(indexExpense = case_when(AnnualExpense_Lower >= 100 & AnnualExpense_Lower < 200 ~ 1,
+                                  AnnualExpense_Lower >= 200 & AnnualExpense_Lower < 300 ~ 2,
+                                  AnnualExpense_Lower >= 300 & AnnualExpense_Lower < 400 ~ 3,
+                                  AnnualExpense_Lower >= 400 & AnnualExpense_Lower < 500 ~ 4,
+                                  AnnualExpense_Lower >= 500 & AnnualExpense_Lower < 600 ~ 5,
+                                  AnnualExpense_Lower >= 600 & AnnualExpense_Lower < 700 ~ 6,
+                                  AnnualExpense_Lower >= 700 & AnnualExpense_Lower < 800 ~ 7,
+                                  AnnualExpense_Lower >= 800 & AnnualExpense_Lower < 900 ~ 8,
+                                  AnnualExpense_Lower >= 900 & AnnualExpense_Lower < 1000 ~9,
+                                  AnnualExpense_Lower >= 1000 & AnnualExpense_Lower < 1100 ~ 10,
+                                  AnnualExpense_Lower >= 1100 & AnnualExpense_Lower < 1200 ~ 11,
+                                  AnnualExpense_Lower >= 1200 & AnnualExpense_Lower < 1300 ~ 12,
+                                  AnnualExpense_Lower >= 1300 & AnnualExpense_Lower < 1400 ~ 13,
+                                  AnnualExpense_Lower >= 1400 & AnnualExpense_Lower < 1500 ~ 14,
+                                  AnnualExpense_Lower >= 1500 ~ 15)) |>
   mutate(FriendChild = FriendChild - 1) |>
   mutate(GroomingReq = case_when(GroomingReq == 5 ~ 1,
                                  GroomingReq == 4 ~ 2,
@@ -127,6 +141,11 @@ catreadydf <- read_csv("petdf - catnew.csv") |>
                                  Vocality == 3 ~ 3,
                                  Vocality == 2 ~ 4,
                                  Vocality == 1 ~ 5)) |>
+  mutate(ActivityLevel = case_when(ActivityLevel == 5 ~ 1,
+                                 ActivityLevel == 4 ~ 2,
+                                 ActivityLevel == 3 ~ 3,
+                                 ActivityLevel == 2 ~ 4,
+                                 ActivityLevel == 1 ~ 5)) |>
   select(BreedName, indexExpense, GroomingReq, Vocality, Shedding, FriendChild, ActivityLevel) |>
   cross_join(InputIndexify) |>
   rowwise() |>

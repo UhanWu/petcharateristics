@@ -1,0 +1,145 @@
+---
+title: "pigs"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+
+weighted_cosine_similarity <- function(vec1, vec2) {
+  length1 <- sqrt(sum(vec1^2))
+  length2 <- sqrt(sum(vec2^2))
+
+  # Calculate directional weights
+  weights_ab <- length1 / length2
+
+  # Calculate cosine similarity A to B
+  dot_product <- sum(vec1 * vec2) * weights_ab
+  
+  norm1 <- sqrt(sum(vec1^2))
+  norm2 <- sqrt(sum(vec2^2))
+  
+  similarity <- dot_product / (norm1 * norm2)
+  return(similarity)
+}
+```
+
+# User Inputs
+
+
+```{r}
+ userinfoInputPig <- tibble(ID = 1:6, 
+                     budgetinput = c(10000, 350, 450, 650, 300, 800),  
+                     housholdnumberinput = c(1, 3, 2, 7, 4, 1),
+                     allergiesinput = c(0, 1, 0, 4, 2, 0),
+                     maintenanceinput = c(0, 1, 1, 2, 0, 1),
+                     intentioninput = c(0, 2, 0, 0, 1, 2),
+                     howmanypigsinput = c(0, 2, 1, 0, 0, 0),
+                     howmanydogsinput = c(0, 0, 1, 0, 0, 1),
+                     howmanycatsinput = c(0, 1, 0, 0, 1, 0))
+```
+
+
+# HWB
+
+```{r}
+InputIndexifyPig <- userinfoInputPig |>
+  mutate(indexExpenseInput = case_when(budgetinput >= 0 & budgetinput < 200 ~ 1,
+                                  budgetinput >= 200 & budgetinput < 400 ~ 2,
+                                  budgetinput >= 400 & budgetinput < 600 ~ 3,
+                                  budgetinput >= 600 & budgetinput < 800 ~ 4,
+                                  budgetinput >= 800 & budgetinput < 1000 ~ 5,
+                                  budgetinput >= 1000 & budgetinput < 1200 ~ 6,
+                                  budgetinput >= 1200 & budgetinput < 1400 ~ 7,
+                                  budgetinput >= 1400 & budgetinput < 1600 ~ 8,
+                                  budgetinput >= 1600 & budgetinput < 1800 ~ 9,
+                                  budgetinput >= 1800 & budgetinput < 2000 ~ 10,
+                                  budgetinput >= 2000  ~ 11)) |>
+  mutate(indexMaintenanceInput = maintenanceinput) |>
+  mutate(indexAllergiesInput1 = allergiesinput/housholdnumberinput,
+         indexAllergiesFINAL = case_when(indexAllergiesInput1 >= 0 & indexAllergiesInput1 < 0.2 ~ 5,
+                                          indexAllergiesInput1 >= 0.2 & indexAllergiesInput1 < 0.4 ~ 4,
+                                          indexAllergiesInput1 >= 0.4 & indexAllergiesInput1 < 0.6 ~ 3,
+                                          indexAllergiesInput1 >= 0.6 & indexAllergiesInput1 < 0.8 ~ 2,
+                                          indexAllergiesInput1 >= 0.8 & indexAllergiesInput1 <= 1 ~ 1)) |>
+  select(ID, indexExpenseInput, indexMaintenanceInput, indexAllergiesFINAL)
+```
+
+```{r}
+pidreadydf <- tibble(BreedName = c("GuinneaPigs1", "GuinneaPigs2", "GuinneaPigs3", "GuinneaPigs4", "GuinneaPigs5"), 
+                     Annualexpense = c(500, 600, 700, 800, 900), pigsallergy = 4) |>
+  mutate(indexExpense = case_when(Annualexpense >= 0 & Annualexpense < 200 ~ 1,
+                                  Annualexpense >= 200 & Annualexpense < 400 ~ 2,
+                                  Annualexpense >= 400 & Annualexpense < 600 ~ 3,
+                                  Annualexpense >= 600 & Annualexpense < 800 ~ 4,
+                                  Annualexpense >= 800 & Annualexpense < 1000 ~ 5,
+                                  Annualexpense >= 1000 & Annualexpense < 1200 ~ 6,
+                                  Annualexpense >= 1200 & Annualexpense < 1400 ~ 7,
+                                  Annualexpense >= 1400 & Annualexpense < 1600 ~ 8,
+                                  Annualexpense >= 1600 & Annualexpense < 1800 ~ 9,
+                                  Annualexpense >= 1800 & Annualexpense < 2000 ~ 10,
+                                  Annualexpense >= 2000 ~ 11)) |>
+  mutate(indexPigallergy = pigsallergy) |>
+  mutate(MaintenanceReq = 3) |>
+  select(BreedName, indexExpense, MaintenanceReq, indexPigallergy) |>
+  cross_join(InputIndexifyPig)  |>
+  rowwise() |>
+  mutate(HWBindex = weighted_cosine_similarity(c(indexExpenseInput, indexMaintenanceInput, indexAllergiesFINAL),
+                                                c(indexExpense, MaintenanceReq, indexPigallergy))) 
+
+
+HWBindexDF <- pidreadydf |>
+  select(ID, BreedName, HWBindex) |>
+  ungroup() 
+  
+```
+# PWB
+
+```{r}
+InputIndexifyPig2 <- userinfoInputPig |>
+  mutate(intentionInput = intentioninput) |>
+  mutate(howmanypigsinput = case_when(howmanypigsinput >= 1 ~ 2,
+                                       howmanypigsinput == 0 ~ 1),
+         howmanydogsinput = case_when(howmanydogsinput >= 1 ~ 0,
+                                      howmanydogsinput ==0 ~ 1),
+         howmanycatsinput = case_when(howmanycatsinput >= 1 ~ 0,
+                                      howmanycatsinput ==0 ~ 1)) |>
+  mutate(multiplepetsInput = howmanypigsinput + howmanydogsinput + howmanycatsinput) |>
+  select(ID, intentionInput, multiplepetsInput)
+
+pigreadydf2 <- tibble(BreedName = c("GuinneaPigs1", "GuinneaPigs2", "GuinneaPigs3", "GuinneaPigs4", "GuinneaPigs5"), 
+                     Annualexpense = c(500, 600, 700, 800, 900), pigsallergy = 4) |>
+  mutate(PigIntent = 2) |>
+  mutate(multiplePets = 4) |>
+  select(BreedName, PigIntent, multiplePets) |>
+  cross_join(InputIndexifyPig2) |>
+  rowwise() |>
+  mutate(PWBindex = weighted_cosine_similarity(c(intentionInput, multiplepetsInput),
+                                                c(PigIntent, multiplePets))) 
+
+
+PWBindexDF <- pigreadydf2 |>
+  select(ID, BreedName, PWBindex) |>
+  ungroup() 
+
+```
+
+
+```{r}
+PWBindexDF |>
+  merge(HWBindexDF) |>
+  mutate(passNo = if_else(PWBindex>= 0.70 & HWBindex >= 0.70, 1, 0 )) |>
+  summarise(totalcount = sum(passNo), .by = ID)
+```
+
+
+
+
+
+
+
+
+
+
+

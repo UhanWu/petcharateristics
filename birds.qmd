@@ -1,0 +1,189 @@
+---
+title: "birds"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+
+birddf <- read_csv("petdfbirdy.csv") |>
+  mutate(molting = c("Hypoallergenic", "Severe", "Moderate", "Hypoallergenic", "Severe", "Hypoallergenic"))
+```
+
+
+```{r}
+weighted_cosine_similarity <- function(vec1, vec2) {
+  length1 <- sqrt(sum(vec1^2))
+  length2 <- sqrt(sum(vec2^2))
+
+  # Calculate directional weights
+  weights_ab <- length1 / length2
+
+  # Calculate cosine similarity A to B
+  dot_product <- sum(vec1 * vec2) * weights_ab
+  
+  norm1 <- sqrt(sum(vec1^2))
+  norm2 <- sqrt(sum(vec2^2))
+  
+  similarity <- dot_product / (norm1 * norm2)
+  return(similarity)
+}
+```
+
+```{r}
+  userinfoInputBird <- tibble(ID = 1:6, 
+                     budgetinput = c(10000, 350, 450, 650, 300, 800),  
+                     ownrentinput = c("own", "rent", "rent", "own", "rent", "own"),
+                     babiesinput = c(0, 1, 0, 2, 1, 0),
+                     housholdnumberinput = c(1, 3, 2, 7, 4, 1),
+                     ownershiphistoryinput = c("no", "current", "previous", "no", "no", "previous"),
+                     yearsexpereinceinput = c(0, 4, 3, 0, 0, 1),
+                     allergiesinput = c(0, 1, 0, 4, 2, 0),
+                     maintenanceinput = c(0, 1, 1, 2, 0, 1),
+                     intentioninput = c(0, 2, 0, 0, 1, 2),
+                     howmanybirdsinput = c(0, 2, 1, 0, 0, 0))
+
+
+```
+
+# HWB
+```{r}
+InputIndexifyBird <- userinfoInputBird |>
+  mutate(indexExpenseInput = case_when(budgetinput >= 0 & budgetinput < 200 ~ 1,
+                                  budgetinput >= 200 & budgetinput < 400 ~ 2,
+                                  budgetinput >= 400 & budgetinput < 600 ~ 3,
+                                  budgetinput >= 600 & budgetinput < 800 ~ 4,
+                                  budgetinput >= 800 & budgetinput < 1000 ~ 5,
+                                  budgetinput >= 1000 & budgetinput < 1200 ~ 6,
+                                  budgetinput >= 1200 & budgetinput < 1400 ~ 7,
+                                  budgetinput >= 1400 & budgetinput < 1600 ~ 8,
+                                  budgetinput >= 1600 & budgetinput < 1800 ~ 9,
+                                  budgetinput >= 1800 & budgetinput < 2000 ~ 10,
+                                  budgetinput >= 2000 & budgetinput < 2200 ~ 11,
+                                  budgetinput >= 2200 & budgetinput < 2400 ~ 12,
+                                  budgetinput >= 2400 & budgetinput < 2600 ~ 13,
+                                  budgetinput >= 2600 & budgetinput < 2800 ~ 14,
+                                  budgetinput >= 2800 & budgetinput < 3000 ~ 15,
+                                  budgetinput >= 3000 ~ 16))|>
+  mutate(indexMaintenanceInput = maintenanceinput) |>
+  mutate(indexNoiseInput = case_when(ownrentinput == "own" & babiesinput == 0 ~ 5,
+                                         ownrentinput == "own" & babiesinput == 1 ~ 4,
+                                         ownrentinput == "own" & babiesinput >= 2 ~ 3,
+                                         ownrentinput == "rent" & babiesinput == 0 ~ 3,
+                                         ownrentinput == "rent" & babiesinput == 1 ~ 2,
+                                         ownrentinput == "rent" & babiesinput >= 2 ~ 1)) |>
+  mutate(indexAllergiesInput1 = allergiesinput/housholdnumberinput,
+         indexAllergiesFINAL = case_when(indexAllergiesInput1 >= 0 & indexAllergiesInput1 < 0.2 ~ 5,
+                                          indexAllergiesInput1 >= 0.2 & indexAllergiesInput1 < 0.4 ~ 4,
+                                          indexAllergiesInput1 >= 0.4 & indexAllergiesInput1 < 0.6 ~ 3,
+                                          indexAllergiesInput1 >= 0.6 & indexAllergiesInput1 < 0.8 ~ 2,
+                                          indexAllergiesInput1 >= 0.8 & indexAllergiesInput1 <= 1 ~ 1)) |>
+  select(ID, indexExpenseInput, indexMaintenanceInput, 
+         indexNoiseInput, indexAllergiesFINAL)
+  
+```
+
+
+```{r}
+birdreadydf <- birddf |>
+  mutate(indexExpense = case_when(Annualexpense >= 0 & Annualexpense < 200 ~ 1,
+                                  Annualexpense >= 200 & Annualexpense < 400 ~ 2,
+                                  Annualexpense >= 400 & Annualexpense < 600 ~ 3,
+                                  Annualexpense >= 600 & Annualexpense < 800 ~ 4,
+                                  Annualexpense >= 800 & Annualexpense < 1000 ~ 5,
+                                  Annualexpense >= 1000 & Annualexpense < 1200 ~ 6,
+                                  Annualexpense >= 1200 & Annualexpense < 1400 ~ 7,
+                                  Annualexpense >= 1400 & Annualexpense < 1600 ~ 8,
+                                  Annualexpense >= 1600 & Annualexpense < 1800 ~ 9,
+                                  Annualexpense >= 1800 & Annualexpense < 2000 ~ 10,
+                                  Annualexpense >= 2000 & Annualexpense < 2200 ~ 11,
+                                  Annualexpense >= 2200 & Annualexpense < 2400 ~ 12,
+                                  Annualexpense >= 2400 & Annualexpense < 2600 ~ 13,
+                                  Annualexpense >= 2600 & Annualexpense < 2800 ~ 14,
+                                  Annualexpense >= 2800 & Annualexpense < 3000 ~ 15,
+                                  Annualexpense >= 3000 ~ 16)) |>
+  mutate(moltingBird = case_when(molting == "Hypoallergenic" ~ 3,
+                                 molting == "Moderate" ~ 2,
+                                 molting == "Severe" ~ 1)) |>
+  mutate(MaintenanceReq = 3) |>
+  mutate(noise = case_when(noise == 5 ~ 1,
+                                 noise == 4 ~ 2,
+                                 noise == 3 ~ 3,
+                                 noise == 2 ~ 4,
+                                 noise == 1 ~ 5)) |>
+  select(Breed, indexExpense, MaintenanceReq, noise, moltingBird) |>
+  cross_join(InputIndexifyBird) |>
+  rowwise() |>
+  mutate(HWBindex = weighted_cosine_similarity(c(indexExpenseInput, indexMaintenanceInput, indexNoiseInput, 
+                                                 indexAllergiesFINAL),
+                                                c(indexExpense, MaintenanceReq, noise, moltingBird))) 
+
+HWBindexDF <- birdreadydf |>
+  select(ID, Breed, HWBindex) |>
+  ungroup() 
+
+  
+```
+
+# PWB
+
+```{r}
+InputIndexifyBird2 <- userinfoInputBird |>
+   mutate(indexExperienceInput = case_when(ownershiphistoryinput == "no" & yearsexpereinceinput == 0 ~ 1,
+                                          ownershiphistoryinput == "previous" & 
+                                            yearsexpereinceinput > 0 & yearsexpereinceinput < 1 ~ 2,
+                                          ownershiphistoryinput == "current" & 
+                                            yearsexpereinceinput > 0 & yearsexpereinceinput < 1 ~ 2,
+                                          ownershiphistoryinput == "previous" & 
+                                            yearsexpereinceinput >= 1 & yearsexpereinceinput < 3 ~ 3,
+                                          ownershiphistoryinput == "current" & 
+                                            yearsexpereinceinput >= 1 & yearsexpereinceinput < 3 ~ 3,
+                                          ownershiphistoryinput == "previous" & 
+                                            yearsexpereinceinput >= 3 & yearsexpereinceinput < 5 ~ 4,
+                                          ownershiphistoryinput == "current" & 
+                                            yearsexpereinceinput >= 3 & yearsexpereinceinput < 5 ~ 4,
+                                          ownershiphistoryinput == "previous" & 
+                                            yearsexpereinceinput >= 5  ~ 5,
+                                          ownershiphistoryinput == "current" & 
+                                            yearsexpereinceinput >= 5  ~ 5)) |>
+  mutate(intentionInput = intentioninput) |>
+  mutate(howmanybirdsInput = case_when(howmanybirdsinput >= 1 ~ 1,
+                                       howmanybirdsinput == 0 ~ 0)) |>
+  select(ID,indexExperienceInput, intentionInput, howmanybirdsInput)
+
+
+birdreadydf2 <- birddf |>
+  mutate(training = case_when(training == 5 ~ 1,
+                                 training == 4 ~ 2,
+                                 training == 3 ~ 3,
+                                 training == 2 ~ 4,
+                                 training == 1 ~ 5)) |>
+  mutate(BirdIntent = 2) |>
+  mutate(multiplebirds = 1) |>
+  select(Breed, training, BirdIntent, multiplebirds) |>
+  cross_join(InputIndexifyBird2) |>
+  rowwise() |>
+  mutate(PWBindex = weighted_cosine_similarity(c(indexExperienceInput, intentionInput, howmanybirdsInput),
+                                                c(training, BirdIntent, multiplebirds))) 
+
+
+PWBindexDF <- birdreadydf2 |>
+  select(ID, Breed, PWBindex) |>
+  ungroup() 
+  
+
+```
+
+```{r}
+PWBindexDF |>
+  merge(HWBindexDF) |>
+  mutate(passNo = if_else(PWBindex>= 0.70 & HWBindex >= 0.70, 1, 0 )) |>
+  summarise(totalcount = sum(passNo), .by = ID)
+  
+```
+
+
+
+
+
