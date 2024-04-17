@@ -36,17 +36,21 @@ weighted_cosine_similarity <- function(vec1, vec2) {
 
 
 ```{r}
-set.seed(1003)
+set.seed(1005)
 
-n = 20000
+n = 10000
 
-california_homeownership_rate <- 0.546
+california_homeownership_rate <- 0.558 
 west_virginia_homeownership_rate <- 0.79
 new_york_homeownership_rate <- 0.536
 
 avg_household_size_ca <- 2.94
 avg_household_size_wv <- 2.40
 avg_household_size_ny <- 2.55
+
+CAwage <- 62525*1.03^5
+WVwage <- 40539*1.03^5
+NYwage <- 56897*1.03^5
 
 
 userinfoInput <- expand.grid(ID = 1:n, state = c("California", "West Virginia", "New York"))
@@ -57,9 +61,9 @@ userinfoInput <- userinfoInput %>%
 userinfoInput <- userinfoInput %>%
   group_by(state) |>
   mutate(salaryinput = case_when(
-    state == "California" ~ sample(seq(62525 * 0.10, 62525 * 1.1, by = 0.1), size = n(), replace = TRUE),
-    state == "West Virginia" ~ sample(seq(40539 * 0.10, 40539 * 1.1, by = 0.1), size = n(), replace = TRUE),
-    state == "New York" ~ sample(seq(56897 * 0.10, 56897 * 1.1, by = 0.1), size = n(), replace = TRUE)
+    state == "California" ~ sample(seq(CAwage * 0.10, CAwage * 1.1, by = 0.1), size = n(), replace = TRUE),
+    state == "West Virginia" ~ sample(seq(WVwage * 0.10, WVwage * 1.1, by = 0.1), size = n(), replace = TRUE),
+    state == "New York" ~ sample(seq(NYwage * 0.10, NYwage * 1.1, by = 0.1), size = n(), replace = TRUE)
   )) |>
   ungroup() 
 
