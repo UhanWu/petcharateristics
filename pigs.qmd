@@ -30,14 +30,14 @@ weighted_cosine_similarity <- function(vec1, vec2) {
 
 ```{r}
  userinfoInputPig <- tibble(ID = 1:6, 
-                     budgetinput = c(10000, 350, 450, 650, 300, 800),  
+                     budgetinput = c(10000, 350, 450, 650, 600, 800),  
                      housholdnumberinput = c(1, 3, 2, 7, 4, 1),
                      allergiesinput = c(0, 1, 0, 4, 2, 0),
                      maintenanceinput = c(0, 1, 1, 2, 0, 1),
-                     intentioninput = c(0, 2, 0, 0, 1, 2),
+                     intentioninput = c(0, 2, 0, 1, 1, 2),
                      howmanypigsinput = c(0, 2, 1, 0, 0, 0),
                      howmanydogsinput = c(0, 0, 1, 0, 0, 1),
-                     howmanycatsinput = c(0, 1, 0, 0, 1, 0))
+                     howmanycatsinput = c(0, 0, 0, 1, 0, 0))
 ```
 
 
@@ -99,19 +99,19 @@ HWBindexDF <- pidreadydf |>
 ```{r}
 InputIndexifyPig2 <- userinfoInputPig |>
   mutate(intentionInput = intentioninput) |>
-  mutate(howmanypigsinput = case_when(howmanypigsinput >= 1 ~ 2,
-                                       howmanypigsinput == 0 ~ 1),
-         howmanydogsinput = case_when(howmanydogsinput >= 1 ~ 0,
-                                      howmanydogsinput ==0 ~ 1),
-         howmanycatsinput = case_when(howmanycatsinput >= 1 ~ 0,
-                                      howmanycatsinput ==0 ~ 1)) |>
+  mutate(howmanypigsinput = case_when(howmanypigsinput >= 1 ~ 3,
+                                       howmanypigsinput == 0 ~ 2),
+         howmanydogsinput = case_when(howmanydogsinput >= 1 ~ 1,
+                                      howmanydogsinput ==0 ~ 2),
+         howmanycatsinput = case_when(howmanycatsinput >= 1 ~ 1,
+                                      howmanycatsinput ==0 ~ 2)) |>
   mutate(multiplepetsInput = howmanypigsinput + howmanydogsinput + howmanycatsinput) |>
   select(ID, intentionInput, multiplepetsInput)
 
 pigreadydf2 <- tibble(BreedName = c("GuinneaPigs1", "GuinneaPigs2", "GuinneaPigs3", "GuinneaPigs4", "GuinneaPigs5"), 
                      Annualexpense = c(500, 600, 700, 800, 900), pigsallergy = 4) |>
   mutate(PigIntent = 2) |>
-  mutate(multiplePets = 4) |>
+  mutate(multiplePets = 7) |>
   select(BreedName, PigIntent, multiplePets) |>
   cross_join(InputIndexifyPig2) |>
   rowwise() |>

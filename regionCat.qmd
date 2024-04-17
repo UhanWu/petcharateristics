@@ -38,7 +38,7 @@ weighted_cosine_similarity <- function(vec1, vec2) {
 ```{r}
 set.seed(1003)
 
-n = 100000
+n = 20000
 
 california_homeownership_rate <- 0.546
 west_virginia_homeownership_rate <- 0.79
@@ -254,5 +254,5 @@ PWBindexDF |>
   summarise(totalcount = sum(passNo), .by = c(state, ID)) |>
   filter(totalcount >= 5) |>
   select(state, ID) |>
-  summarise(totalownstate = n(), .by = state)
+  summarise(totalownstate = n()/n, .by = state)
 ```

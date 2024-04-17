@@ -47,16 +47,17 @@ User6: Retired Veteren (Yes)
 set.seed(1003)
   
   userinfoInput <- tibble(ID = 1:6, 
-                     budgetinput = c(10000, 350, 450, 650, 300, 800), 
-                     groominginput = c(1, 5, 2, 3, 1, 4),
-                     ownrentinput = c("own", "rent", "rent", "own", "rent", "own"),
-                     babiesinput = c(0, 1, 0, 2, 1, 0),
-                     allergiesinput = c(0, 1, 0, 4, 2, 0),
-                     housholdnumberinput = c(1, 3, 2, 7, 4, 1),
-                     activehourinput = c(1, 30, 3, 7, 2, 25),
-                     experienceinput = c(0, 8, 1, 1, 0, 2),
-                     vacayinput = c(1, 2, 0, 0, 2, 2),
-                     intentioninput = c(0, 2, 0, 0, 1, 2))
+                   budgetinput = c(2000, 550, 450, 600, 300, 760), 
+                   groominginput = c(1, 5, 2, 4, 1, 4),
+                   ownrentinput = c("own", "own", "rent", "own", "rent", "own"),
+                   babiesinput = c(0, 1, 0, 2, 1, 0),
+                   allergiesinput = c(0, 1, 0, 3, 2, 0),
+                   housholdnumberinput = c(1, 3, 2, 7, 4, 1),
+                   activehourinput = c(1, 30, 3, 7, 2, 25),
+                   experienceinput = c(0, 8, 1, 1, 0, 0),
+                   vacayinput = c(1, 2, 0, 2, 0, 2),
+                   intentioninput = c(0, 2, 0, 0, 1, 2))
+
 ```
 
 
@@ -208,8 +209,57 @@ PWBindexDF <- catreadydf2 |>
 PWBindexDF |>
   merge(HWBindexDF) |>
   mutate(passNo = if_else(PWBindex>= 0.70 & HWBindex >= 0.70, 1, 0 )) |>
-  summarise(totalcount = sum(passNo), .by = ID)
+  mutate(User = case_when(ID == 1 ~ "Investment Banker",
+                          ID == 2 ~ "Average Retiree", 
+                          ID == 3 ~ "Newly Weds", 
+                          ID == 4 ~ "Large Familly",
+                          ID == 5 ~ "Single-Parent/Low-Income",
+                          ID == 6 ~ "Retired Veteren")) |>
+  ggplot(aes(x = PWBindex, y = HWBindex, color = User)) + 
+  geom_point() + 
+  theme_bw()
   
 ```
+```{r}
+library(ggplot2)
+library(dplyr)
 
+# Your existing data processing pipeline
+PWBindexDF |>
+  merge(HWBindexDF) |>
+  mutate(passNo = if_else(PWBindex >= 0.70 & HWBindex >= 0.70, 1, 0)) |>
+  mutate(User = case_when(
+    ID == 1 ~ "Investment Banker",
+    ID == 2 ~ "Average Retiree",
+    ID == 3 ~ "Newly Weds",
+    ID == 4 ~ "Large Familly",
+    ID == 5 ~ "Single-Parent/Low-Income",
+    ID == 6 ~ "Retired Veteren"
+  )) |>
+  ggplot(aes(x = HWBindex, y = PWBindex, color = User)) +
+  geom_point() +
+  theme_bw() +
+  # Adding vertical and horizontal lines at index 0.7
+  geom_vline(xintercept = 0.7, color = "red", linetype = "dashed") +
+  geom_hline(yintercept = 0.7, color = "red", linetype = "dashed") + 
+  geom_rect(aes(xmin = -Inf, xmax = 0.7, ymin = -Inf, ymax = Inf), color = "black", fill = "red", alpha = 0.002) +
+  geom_rect(aes(xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = 0.7),  color = "black", fill = "red", alpha = 0.002) +
+  geom_rect(aes(xmin = 0.7, xmax = Inf, ymin = 0.7, ymax = Inf),  color = "black", fill = "green", alpha = 0.002) +
+  theme_bw() + 
+  labs(x = "HWB Index", y = "PWB Index")
+
+```
+
+
+
+
+
+# Decisions
+```{r}
+PWBindexDF |>
+  merge(HWBindexDF) |>
+  mutate(passNo = if_else(PWBindex>= 0.70 & HWBindex >= 0.70, 1, 0 )) |>
+  summarise(totalcount = sum(passNo), .by = ID)
+
+```
 
